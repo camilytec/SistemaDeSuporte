@@ -34,48 +34,125 @@ if (isset($_POST['atualizar'])) {
 }
 ?>
 
-<h2>Editar chamado</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Editar Chamado</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+    }
+
+    .container {
+        width: 500px;
+        margin: 80px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #341539;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #341539;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #982aa8;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #982aa8;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #341539;
+    }
+
+    .voltar {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        text-decoration: none;
+        color: #982aa8;
+    }
+
+    .voltar:hover {
+        text-decoration: underline;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Editar Chamado</h2>
 
 <form method="POST">
 
-    Título:<br>
-    <input type="text" name="titulo" value="<?= $chamado['titulo'] ?>"><br><br>
+    <label>Título</label>
+    <input type="text" name="titulo" value="<?= $chamado['titulo'] ?>">
 
-    Descrição:<br>
-    <textarea name="descricao"><?= $chamado['descricao'] ?></textarea><br><br>
+    <label>Descrição</label>
+    <textarea name="descricao"><?= $chamado['descricao'] ?></textarea>
 
-    Status:<br>
+    <label>Status</label>
     <select name="status">
 
         <option value="aberto"
-        <?php
-        if ($chamado['status'] == 'aberto') {
-            echo "selected";
-        }
-        ?>>
+        <?php if ($chamado['status'] == 'aberto') echo "selected"; ?>>
         Aberto
         </option>
 
         <option value="em andamento"
-        <?php
-        if ($chamado['status'] == 'em andamento') {
-            echo "selected";
-        }
-        ?>>
+        <?php if ($chamado['status'] == 'em andamento') echo "selected"; ?>>
         Em andamento
         </option>
 
         <option value="resolvido"
-        <?php
-        if ($chamado['status'] == 'resolvido') {
-            echo "selected";
-        }
-        ?>>
+        <?php if ($chamado['status'] == 'resolvido') echo "selected"; ?>>
         Resolvido
         </option>
 
-    </select><br><br>
+    </select>
 
     <button type="submit" name="atualizar">Atualizar</button>
 
 </form>
+
+<a class="voltar" href="listar.php">← Voltar para lista</a>
+
+</div>
+
+</body>
+</html>
