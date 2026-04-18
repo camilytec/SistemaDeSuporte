@@ -3,9 +3,13 @@ include "config/conexao.php";
 
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM chamados WHERE id = $id";
-$result = $conn->query($sql);
+
+$stmt = $conn->prepare("SELECT titulo, descricao, status FROM chamados WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 $chamado = $result->fetch_assoc();
+
 
 if (isset($_POST['atualizar'])) {
 
@@ -13,11 +17,15 @@ if (isset($_POST['atualizar'])) {
     $descricao = $_POST['descricao'];
     $status = $_POST['status'];
 
-    $sql = "UPDATE chamados
-            SET titulo='$titulo', descricao='$descricao', status='$status'
-            WHERE id=$id";
+    $stmt = $conn->prepare(
+        "UPDATE chamados 
+         SET titulo = ?, descricao = ?, status = ? 
+         WHERE id = ?"
+    );
 
-    if ($conn->query($sql) === TRUE) {
+    $stmt->bind_param("sssi", $titulo, $descricao, $status, $id);
+
+    if ($stmt->execute()) {
         header("Location: listar.php");
         exit;
     } else {
@@ -40,17 +48,29 @@ if (isset($_POST['atualizar'])) {
     <select name="status">
 
         <option value="aberto"
-        <?= $chamado['status'] == 'aberto' ? 'selected' : '' ?>>
+        <?php
+        if ($chamado['status'] == 'aberto') {
+            echo "selected";
+        }
+        ?>>
         Aberto
         </option>
 
         <option value="em andamento"
-        <?= $chamado['status'] == 'em andamento' ? 'selected' : '' ?>>
+        <?php
+        if ($chamado['status'] == 'em andamento') {
+            echo "selected";
+        }
+        ?>>
         Em andamento
         </option>
 
         <option value="resolvido"
-        <?= $chamado['status'] == 'resolvido' ? 'selected' : '' ?>>
+        <?php
+        if ($chamado['status'] == 'resolvido') {
+            echo "selected";
+        }
+        ?>>
         Resolvido
         </option>
 

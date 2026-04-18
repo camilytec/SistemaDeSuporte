@@ -5,11 +5,15 @@ if (isset($_POST['enviar'])) {
 
     $titulo = $_POST['titulo'];
     $descricao = $_POST['descricao'];
+    $status = "aberto";
 
-    $sql = "INSERT INTO chamados (titulo, descricao, status)
-            VALUES ('$titulo', '$descricao', 'aberto')";
+    $stmt = $conn->prepare(
+        "INSERT INTO chamados (titulo, descricao, status) VALUES (?, ?, ?)"
+    );
 
-    if ($conn->query($sql) === TRUE) {
+    $stmt->bind_param("sss", $titulo, $descricao, $status);
+
+    if ($stmt->execute()) {
         echo "Chamado criado com sucesso!";
     } else {
         echo "Erro: " . $conn->error;
