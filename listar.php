@@ -1,5 +1,6 @@
 <?php
 include "config/conexao.php";
+include "header.php";
 
 $sql = "SELECT * FROM chamados";
 $result = $conn->query($sql);
