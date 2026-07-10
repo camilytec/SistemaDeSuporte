@@ -35,7 +35,3 @@ Campos:
 - titulo (VARCHAR)
 - descricao (TEXT)
 - status (VARCHAR)
-
-## 🚀 Status do projeto
-✔ CRUD funcional  
-✔ Em desenvolvimento de melhorias visuais  
